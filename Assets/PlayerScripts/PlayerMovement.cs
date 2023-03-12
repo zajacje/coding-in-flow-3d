@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    // Use [SerializeField] instead of public to expose variable in editor without public
     public float jumpStrength = 5;
     public float walkStrength = 5;
     private new Rigidbody rb;
+    // Use [SerializeField] instead of public to expose variable in editor without public
+    [SerializeField] Transform groundCheck;
+    [SerializeField] LayerMask groundLayer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,9 +24,13 @@ public class PlayerMovement : MonoBehaviour
         float verticalInput = Input.GetAxis("Vertical");
         rb.velocity = new Vector3(horizontalInput * walkStrength, rb.velocity.y, verticalInput * walkStrength);
 
-        if (Input.GetButtonDown("Jump")) {
+        if (Input.GetButtonDown("Jump") && IsGrounded()) {
             // Use current velocity so you can walk and jump at same time
             rb.velocity = new Vector3(rb.velocity.x, jumpStrength, rb.velocity.z);
         }
+    }
+
+    bool IsGrounded() {
+        return Physics.CheckSphere(groundCheck.position, 0.1f, groundLayer);
     }
 }
