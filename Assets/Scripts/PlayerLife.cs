@@ -6,13 +6,16 @@ using UnityEngine.SceneManagement;
 public class PlayerLife : MonoBehaviour
 {
     private bool dead = false;
-    private readonly float lowestPlatformY = -1;
+    private readonly float lowestPlatformY = -3;
 
     [SerializeField] AudioSource deathSound;
 
     private void Update() {
         // So we don't die on each frame during delay
         if (transform.position.y < lowestPlatformY && !dead) {
+            // Detach camera to fall offscreen
+            transform.DetachChildren();
+
             Die();
         }
     }
