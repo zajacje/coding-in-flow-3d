@@ -25,12 +25,26 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = new Vector3(horizontalInput * walkStrength, rb.velocity.y, verticalInput * walkStrength);
 
         if (Input.GetButtonDown("Jump") && IsGrounded()) {
-            // Use current velocity so you can walk and jump at same time
-            rb.velocity = new Vector3(rb.velocity.x, jumpStrength, rb.velocity.z);
+            Jump();
         }
+    }
+
+    void Jump() {
+        // Use current velocity so you can walk and jump at same time
+        rb.velocity = new Vector3(rb.velocity.x, jumpStrength, rb.velocity.z);
     }
 
     bool IsGrounded() {
         return Physics.CheckSphere(groundCheck.position, 0.1f, groundLayer);
+    }
+
+    private void OnCollisionEnter(Collision collision) {
+        if (collision.gameObject.CompareTag("Enemy Head")) {
+            // Destroy entire enemy object
+            Destroy(collision.transform.parent.gameObject);
+
+            // Jump again automatically
+            Jump();
+        }
     }
 }

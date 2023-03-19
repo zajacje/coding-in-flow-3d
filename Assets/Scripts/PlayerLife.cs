@@ -5,6 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class PlayerLife : MonoBehaviour
 {
+    private void Update() {
+        if (transform.position.y < -15) {
+            Die();
+        }
+    }
+
     private void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.CompareTag("Enemy Body")) {
             Die();
