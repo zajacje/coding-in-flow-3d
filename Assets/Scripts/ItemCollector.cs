@@ -9,11 +9,14 @@ public class ItemCollector : MonoBehaviour
 
     [SerializeField] TMP_Text coinsText;
 
+    [SerializeField] AudioSource collectionSound;
+
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.CompareTag("Coin")) {
             Destroy(other.gameObject);
             coinsCollected += 1;
             coinsText.text = "Coins: " + coinsCollected;
+            collectionSound.Play();
         }
     }
 }

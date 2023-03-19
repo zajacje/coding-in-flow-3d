@@ -8,6 +8,8 @@ public class PlayerLife : MonoBehaviour
     private bool dead = false;
     private readonly float lowestPlatformY = -1;
 
+    [SerializeField] AudioSource deathSound;
+
     private void Update() {
         // So we don't die on each frame during delay
         if (transform.position.y < lowestPlatformY && !dead) {
@@ -35,12 +37,12 @@ public class PlayerLife : MonoBehaviour
 
     void Die() {
         
-
-        
         dead = true;
 
         // Reload the level... with a delay using Invoke
         Invoke(nameof(ReloadCurrentLevel), 1.3f);
+
+        deathSound.Play();
     }
 
     void ReloadCurrentLevel() {

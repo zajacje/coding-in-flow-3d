@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Transform groundCheck;
     [SerializeField] LayerMask groundLayer;
 
+    [SerializeField] AudioSource jumpSound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +34,9 @@ public class PlayerMovement : MonoBehaviour
     void Jump() {
         // Use current velocity so you can walk and jump at same time
         rb.velocity = new Vector3(rb.velocity.x, jumpStrength, rb.velocity.z);
+
+        // Play sound
+        jumpSound.Play();
     }
 
     bool IsGrounded() {
